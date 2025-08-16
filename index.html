@@ -85,6 +85,7 @@
         font-weight: 800;
         letter-spacing: 2px;
         color: var(--text-color);
+        
     }
     footer h3{
         font-size: 1.2rem;
@@ -108,7 +109,7 @@
         align-items: center;
         justify-content: center;
         transition: transform 0.3s ease;
-        margin-bottom: 10px;
+        
         text-decoration: none;
     }
     #modeToggle:hover {
@@ -141,6 +142,7 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 20px;
+        
     }
 
     .card {
@@ -149,6 +151,7 @@
         overflow: hidden;
         min-width: 220px;
         max-width: 300px;
+        
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
         box-shadow: 0 4px 20px rgba(0,0,0,0.2);
@@ -202,6 +205,38 @@
         color: var(--accent-color);
         
     }
+    @media( max-width: 700px ){
+        header h3 {
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+        word-spacing: 3px;
+        margin-left: -70px;
+        }
+
+    }
+    @media( max-width: 472px ){
+        header h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: 0px;
+        word-spacing: 2px;
+        color: var(--text-color);
+        margin-left: -50px;
+        }
+        footer h3{
+        font-size: 0.8rem;
+        font-weight: 400;
+        margin-left: -20px;
+        letter-spacing: 1px;
+        color: var(--text-color);
+        }
+        #modeToggle,#portfolio{
+            width: 40px;
+            height: 40px;
+            font-size: 1.1rem;
+        }
+    }
+
 </style>
 </head>
 <body>
