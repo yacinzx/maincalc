@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Green Theme</title>
+<style>
+    :root {
+        --first-color: linear-gradient(135deg, #050f0b, #132a1e, #2d4a39);
+        --second-color: rgba(19, 42, 30, 0.5);
+        --text-color: #E3EED4;
+        --card-color: rgba(45, 74, 57, 0.25);
+        --accent-color: #375534;
+        --shadow-color: 0 0px 10px rgba(30, 255, 0, 0.877);
+    }
+
+    .light-mode {
+        --first-color: linear-gradient(135deg, #889674, #4c8d52, #517456);
+        --second-color: rgba(174, 195, 176, 0.4);
+        --text-color: #0F2A1D;
+        --card-color: rgba(238, 236, 236, 0.4);
+        --accent-color: #a4a5a4;
+        --shadow-color: 0 0px 20px rgba(5, 36, 1, 1);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+        background: var(--first-color);
+        font-family: 'Segoe UI', sans-serif;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Background circles */
+    .circle {
+        position: fixed;
+        border-radius: 50%;
+        z-index: 2;
+        opacity: 0.6;
+        
+    }
+    .circle.top-left {
+        width: 350px;
+        height: 350px;
+        background: var(--accent-color);
+        top: -120px;
+        left: -120px;
+        
+    }
+    .circle.bottom-right {
+        width: 350px;
+        height: 350px;
+        background: var(--accent-color);
+        bottom: -120px;
+        right: -120px;
+        
+    }
+
+    header ,footer{
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin: 20px;
+        border-radius: 80px;
+        background: var(--second-color);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        height: 80px;
+        z-index: 3;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    header h3 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: 2px;
+        color: var(--text-color);
+    }
+    footer h3{
+        font-size: 1.2rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: var(--text-color);
+    }
+
+    #modeToggle,#portfolio {
+        position: absolute;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--accent-color);
+        color: var(--text-color);
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+        margin-bottom: 10px;
+        text-decoration: none;
+    }
+    #modeToggle:hover {
+        transform: scale(1.1);
+        box-shadow:  var(--shadow-color);
+    }
+    #portfolio:hover {
+        transform: scale(1.1);
+        box-shadow:  var(--shadow-color);
+    }
+
+    /* Glass container for cards */
+    .cards-wrapper {
+        flex: 1;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 25px;
+        background: var(--second-color);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .card {
+        background: var(--card-color);
+        border-radius: 20px;
+        overflow: hidden;
+        min-width: 220px;
+        max-width: 300px;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow:  var(--shadow-color);
+    }   
+    
+    .card img {
+        width: 300px;
+        height: 200px;
+        object-fit: cover;
+        transition: 1s ease;
+    }
+    .info {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .info .years{
+        display: flex;
+        margin: auto;
+        width: 100%;
+        justify-content: space-evenly;
+    }
+    
+    .card h4 {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    .card button {
+        padding: 10px 40px;
+        background: var(--accent-color);
+        color: var(--text-color);
+        border: none;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        align-self: flex-end;
+    }
+    .card button:hover {
+        background: var(--text-color);
+        color: var(--accent-color);
+        
+    }
+</style>
+</head>
+<body>
+    <div class="circle top-left"></div>
+    <div class="circle bottom-right"></div>
+
+    <header>
+        <h3>CALCULATEUR DE MOYENNE</h3>
+        <button id="modeToggle">🌙</button>
+    </header>
+
+    <div class="cards-wrapper">
+        <section class="container">
+            <div class="card">
+                <img src="images/info.gif" alt="image">
+                <div class="info">
+                    <h4>Informatique - lmd</h4>
+                    <div class="years">
+                    <a href="#"><button>L1</button></a>
+                    <a href="#"><button>L2</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/info.gif" alt="image">
+                <div class="info">
+                    <h4>Informatique - ing</h4>
+                    <div class="years">
+                    <a href="#"><button>L1</button></a>
+                    <a href="#"><button>L2</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/st.gif" alt="image">
+                <div class="info">
+                    <h4>ST - lmd </h4>
+                    <div class="years">
+                    <a href="#"><button>L1</button></a>
+                    <a href="#"><button>L2</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/st.gif" alt="image">
+                <div class="info">
+                    <h4>ST - ing</h4>
+                    <div class="years">
+                    <a href="#"><button>L1</button></a>
+                    <a href="#"><button>L2</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/bio.gif" alt="image">
+                <div class="info">
+                    <h4>Biologie ( SNV ) </h4>
+                    <div class="years">
+                    <a href="#"><button>L1</button></a>
+                    <a href="#"><button>L2</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/sa.gif" alt="image">
+                <div class="info">
+                    <h4>Science Alimentaire - ing</h4>
+                    <div class="years">
+                    <a href="#"><button>L1</button></a>
+                    <a href="#"><button>L2</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/soon.jpg" alt="image">
+                <div class="info">
+                    <h4>Informatique + Economie</h4>
+                    <div class="years">
+                    <a href="#"><button>L1</button></a>
+                    <a href="#"><button>L2</button></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/soon.jpg" alt="image">
+                <div class="info">
+                    <h4>Informatique + Droit</h4>
+                    <div class="years">
+                    <a href="#"><button>L1</button></a>
+                    <a href="#"><button>L2</button></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <h3>Created by ❤ Yacinz</h3>
+        <a href="#"  id="portfolio">🧑</a>
+    </footer>
+    <script>
+        const toggleBtn = document.getElementById('modeToggle');
+        toggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) {
+                toggleBtn.textContent = '🌞';
+                localStorage.setItem('theme', 'light');
+            } else {
+                toggleBtn.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            toggleBtn.textContent = '🌞';
+        }
+    </script>
+</body>
+</html>
