@@ -50,20 +50,19 @@
       border-radius: 50%;
       z-index: 0;
       opacity: 0.5;
-    }
-    .circle.top-left {
       width: 350px;
       height: 350px;
+    }
+    .circle.top-left {
       background: rgb(0, 255, 34);
       top: -120px;
       left: -120px;
     }
     .circle.bottom-right {
-      width: 350px;
-      height: 350px;
       background: rgb(159, 255, 5);
       bottom: -120px;
       right: -120px;
+      
     }
 
     /* Header */
@@ -87,9 +86,9 @@
       letter-spacing: 2px;
       color: var(--text-color);
     }
-    #modeToggle {
+    #modeToggle ,#portfolio{
       position: absolute;
-      right: 20px;
+      right: 5px;
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -102,10 +101,11 @@
       align-items: center;
       justify-content: center;
       transition: transform 0.3s ease;
+      text-decoration: none;
     }
     #return {
       position: absolute;
-      left: 20px;
+      left: 5px;
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -164,15 +164,16 @@
     input[type="number"] {
       width: 60px;
       padding: 6px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
+      border-radius: 5px;
+      border: 1px solid #9c9c9c;
       text-align: center;
-      font-weight: 600;
+      font-weight: 500;
+      font-size: 0.7rem;
     }
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
       -webkit-appearance: none;
-      margin: 0;
+      margin:0;
     }
 
     .avg-green { color: lime; font-weight: bold; }
@@ -197,35 +198,29 @@
       font-weight: 500;
       color: var(--text-color);
     }
+    #portfolio:hover {
+        transform: scale(1.1);
+        box-shadow:  var(--shadow-color);
+    }
 
-    @media(max-width: 800px) {
-      table, th, td { font-size: 1rem; }
-      input[type="number"] { width: 50px; }
-      header h1 { font-size: 1.4rem; }
-    }
-    @media (max-width: 620px) and (min-width: 390px){
-    body {
-      transform: scale(0.8);
-      transform-origin: top left;
-      width: 125%;
-      height: 160%;
-      table, th, td { font-size: 1rem; }
-      input[type="number"] { width: 50px; }
-      header h1 { font-size: 1.4rem; }
-    }
-    }
-    @media (max-width: 390px) {
-    body {
-      transform: scale(0.65);
-      transform-origin: top left;
-      width: 160%;
-      height: 160%;
-    }
-    table, th, td { font-size: 0.9rem; }
-      input[type="number"] { width: 40px; }
-      header h1 { font-size: 1.3rem; }
-
+@media (max-width: 580px) {
+  header{ margin: 20px 10px;}
+  .container{margin: 10px; padding: 10px;}
+  table, th, td { font-size: 0.7rem; }
+  input[type="number"] { width: 40px; }
+  header h1 { font-size: 1.2rem; letter-spacing: 1px;}
+  .circle{ width: 300px; height: 300px;}
 }
+
+@media (max-width: 395px) {
+  table, th, td { font-size: 0.6rem; margin: 10px 0px ;}
+  input[type="number"] { width: 30px; height: 20px; font-size: 0.55rem;}
+  header h1 { font-size: 1.05rem; letter-spacing: 0;}
+  .circle{width: 280px; height: 280px;}
+}
+
+
+
   </style>
 </head>
 <body>
@@ -233,9 +228,9 @@
   <div class="circle bottom-right"></div>
 
   <header>
-    <h1>Informatique + Économie</h1>
-    <button id="modeToggle">🌙</button>
-    <button id="return" onclick="window.location.href='../index.html'">↩</button></a>
+    <h1>Informatique - LMD</h1>
+    <button class="h-btn" id="modeToggle">🌙</button>
+    <button class="h-btn" id="return" onclick="window.location.href='../index.html'">↩</button>
     
   </header>
 
@@ -266,7 +261,8 @@
   </div>
 
   <footer>
-    <h3>Créé par ❤ Yacine</h3>
+    <h3>Créé par ❤ Yacinz</h3>
+    <a href="#"  id="portfolio">🧑</a>
   </footer>
 
   <script>
