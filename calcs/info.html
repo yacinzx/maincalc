@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Informatique + Économie</title>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <style>
+    :root {
+      --first-color: linear-gradient(135deg, #050f0b, #132a1e, #2d4a39);
+      --second-color: rgba(19, 42, 30, 0.5);
+      --text-color: #E3EED4;
+      --card-color: rgba(45, 74, 57, 0.25);
+      --accent-color: #375534;
+      --shadow-color: 0 0px 15px rgba(30, 255, 0, 0.7);
+    }
+
+    body.light {
+      --first-color: linear-gradient(135deg, #889674, #4c8d52, #517456);
+      --second-color: rgba(174, 195, 176, 0.4);
+      --text-color: #0F2A1D;
+      --card-color: rgba(238, 236, 236, 0.4);
+      --accent-color: #a4a5a4;
+      --shadow-color: 0 0px 20px rgba(5, 36, 1, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--first-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden; /* block sideways */
+      overflow-y: auto;
+    }
+    html {
+      overflow-x: hidden; /* block sideways */
+      overflow-y: auto;
+    }
+    /* Circles background */
+    .circle {
+      position: fixed;
+      border-radius: 50%;
+      z-index: 0;
+      opacity: 0.5;
+    }
+    .circle.top-left {
+      width: 350px;
+      height: 350px;
+      background: rgb(0, 255, 34);
+      top: -120px;
+      left: -120px;
+    }
+    .circle.bottom-right {
+      width: 350px;
+      height: 350px;
+      background: rgb(159, 255, 5);
+      bottom: -120px;
+      right: -120px;
+    }
+
+    /* Header */
+    header {
+      margin: 20px;
+      border-radius: 80px;
+      background: var(--second-color);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 2;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--text-color);
+    }
+    #modeToggle {
+      position: absolute;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      color: var(--text-color);
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    #return {
+      position: absolute;
+      left: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      color: var(--text-color);
+      border: none;
+      font-size: 1.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    #return:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-color);
+    }
+
+    /* Container */
+    .container {
+      margin: 20px;
+      padding: 20px;
+      border-radius: 25px;
+      background: var(--second-color);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: var(--text-color);
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 15px;
+      overflow: hidden;
+      background: var(--card-color);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.2);
+      color: var(--text-color);
+    }
+    th {
+      background: var(--accent-color);
+      color: var(--text-color);
+    }
+    input[type="number"] {
+      width: 60px;
+      padding: 6px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-weight: 600;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .avg-green { color: lime; font-weight: bold; }
+    .avg-red { color: red; font-weight: bold; }
+
+    /* Footer */
+    footer {
+      margin: 20px;
+      border-radius: 80px;
+      background: var(--second-color);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 2;
+    }
+    footer h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    @media(max-width: 800px) {
+      table, th, td { font-size: 0.8rem; }
+      input[type="number"] { width: 50px; }
+      header h1 { font-size: 1.2rem; }
+    }
+    @media (max-width: 620px) and (min-width: 390px){
+    body {
+      transform: scale(0.8);
+      transform-origin: top left;
+      width: 125%;
+      
+    }
+    }
+    @media (max-width: 390px) {
+    body {
+      transform: scale(0.65);
+      transform-origin: top left;
+      width: 160%;
+    }
+
+}
+  </style>
+</head>
+<body>
+  <div class="circle top-left"></div>
+  <div class="circle bottom-right"></div>
+
+  <header>
+    <h1>Informatique + Économie</h1>
+    <button id="modeToggle">🌙</button>
+    <button id="return" onclick="window.location.href='../index.html'">↩</button></a>
+    
+  </header>
+
+  <div class="container">
+    <h2>SEMESTRE 1</h2>
+    <table>
+      <thead>
+        <tr><th>Module</th><th>TP</th><th>TD</th><th>Examen</th><th>Moyenne</th></tr>
+      </thead>
+      <tbody id="table-body1"></tbody>
+      <tfoot>
+        <tr><th colspan="4">Moyenne Générale</th><th id="final-average1">-</th></tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="container">
+    <h2>SEMESTRE 2</h2>
+    <table>
+      <thead>
+        <tr><th>Module</th><th>TP</th><th>TD</th><th>Examen</th><th>Moyenne</th></tr>
+      </thead>
+      <tbody id="table-body2"></tbody>
+      <tfoot>
+        <tr><th colspan="4">Moyenne Générale</th><th id="final-average2">-</th></tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <footer>
+    <h3>Créé par ❤ Yacine</h3>
+  </footer>
+
+  <script>
+  const modules1 = [
+    { nom: "Analyse 1", coef: 6, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+    { nom: "Algèbre 1", coef: 5, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+    { nom: "Algo 1", coef: 6, hasTP: true, hasTD: true, weights: { tp: 0.2, td: 0.2, exam: 0.6 } },
+    { nom: "Structure Machine 1", coef: 5, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } },
+    { nom: "Physique 1", coef: 4, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+    { nom: "Langue Étrangère 1", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } },
+    { nom: "TSEE", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } }
+  ];
+
+  const modules2 = [
+    { nom: "Analyse 2", coef: 6, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+    { nom: "Algèbre 2", coef: 4, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+    { nom: "Algo 2", coef: 6, hasTP: true, hasTD: true, weights: { tp: 0.2, td: 0.2, exam: 0.6 } },
+    { nom: "Structure Machine 2", coef: 4, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } },
+    { nom: "Physique 2", coef: 3, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+    { nom: "Langue Étrangère 2", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } },
+    { nom: "Proba et Stat", coef: 3, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+    { nom: "TIC", coef: 2, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } }
+  ];
+
+
+    function createTable(modules, tbodyId) {
+      document.getElementById(tbodyId).innerHTML = modules.map((mod, i) => `
+        <tr>
+          <td>${mod.nom}</td>
+          <td>${mod.hasTP ? `<input type="number" min="0" max="20" id="tp${tbodyId}${i}" oninput="calculer('${tbodyId}')">` : '-'}</td>
+          <td>${mod.hasTD ? `<input type="number" min="0" max="20" id="td${tbodyId}${i}" oninput="calculer('${tbodyId}')">` : '-'}</td>
+          <td><input type="number" min="0" max="20" id="exam${tbodyId}${i}" oninput="calculer('${tbodyId}')"></td>
+          <td id="avg${tbodyId}${i}">-</td>
+        </tr>`).join('');
+    }
+
+    function calculer(tbodyId) {
+      const mods = tbodyId === 'table-body1' ? modules1 : modules2;
+      let total = 0, coefSum = 0;
+      mods.forEach((mod, i) => {
+        let tp = mod.hasTP ? parseFloat(document.getElementById(`tp${tbodyId}${i}`).value) || 0 : 0;
+        let td = mod.hasTD ? parseFloat(document.getElementById(`td${tbodyId}${i}`).value) || 0 : 0;
+        let exam = parseFloat(document.getElementById(`exam${tbodyId}${i}`).value) || 0;
+        let moyenne = 0;
+        if (mod.hasTP) moyenne += mod.weights.tp * tp;
+        if (mod.hasTD) moyenne += mod.weights.td * td;
+        moyenne += mod.weights.exam * exam;
+        total += moyenne * mod.coef;
+        coefSum += mod.coef;
+        const avgCell = document.getElementById(`avg${tbodyId}${i}`);
+        avgCell.textContent = moyenne.toFixed(2);
+        avgCell.className = moyenne >= 10 ? 'avg-green' : 'avg-red';
+      });
+      const finalAvg = total / coefSum;
+      const finalAvgEl = document.getElementById(tbodyId === 'table-body1' ? 'final-average1' : 'final-average2');
+      finalAvgEl.textContent = finalAvg.toFixed(2);
+      finalAvgEl.className = finalAvg >= 10 ? 'avg-green' : 'avg-red';
+    }
+
+    const toggleBtn = document.getElementById('modeToggle');
+    toggleBtn.addEventListener('click', function() {
+      document.body.classList.toggle('light');
+      if (document.body.classList.contains('light')) {
+        toggleBtn.textContent = '🌞';
+        localStorage.setItem('theme', 'light');
+      } else {
+        toggleBtn.textContent = '🌙';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+    if (localStorage.getItem('theme') === 'light') {
+      document.body.classList.add('light');
+      toggleBtn.textContent = '🌞';
+    }
+
+    createTable(modules1, 'table-body1');
+    createTable(modules2, 'table-body2');
+  </script>
+</body>
+</html>
