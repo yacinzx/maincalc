@@ -42,7 +42,7 @@
     }
     html {
       overflow-x: hidden; /* block sideways */
-      overflow-y: auto;
+      overflow-y: hidden;
     }
     /* Circles background */
     .circle {
@@ -201,14 +201,17 @@
     @media(max-width: 800px) {
       table, th, td { font-size: 0.8rem; }
       input[type="number"] { width: 50px; }
-      header h1 { font-size: 1.2rem; }
+      header h1 { font-size: 1.3rem; }
     }
     @media (max-width: 620px) and (min-width: 390px){
     body {
       transform: scale(0.8);
       transform-origin: top left;
       width: 125%;
-      
+      height: 160%;
+      table, th, td { font-size: 0.9rem; }
+      input[type="number"] { width: 60px; }
+      header h1 { font-size: 1.3rem; }
     }
     }
     @media (max-width: 390px) {
@@ -216,7 +219,11 @@
       transform: scale(0.65);
       transform-origin: top left;
       width: 160%;
+      height: 160%;
     }
+    table, th, td { font-size: 0.9rem; }
+      input[type="number"] { width: 40px; }
+      header h1 { font-size: 1.4rem; }
 
 }
   </style>
