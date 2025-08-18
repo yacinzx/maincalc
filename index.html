@@ -93,7 +93,57 @@
         z-index: 3;
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
+    .search {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin: 0 20px;
+        border-radius: 80px;
+        background: var(--second-color);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        height: 80px;
+        z-index: 3;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
 
+    .search-container {
+        display: flex;
+        align-items: center;
+        width: 80%; /* long container */
+        max-width: 600px;
+        background: #fff;
+        border-radius: 50px;
+        padding: 10px 20px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+    }
+
+    .search-container:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+        transform: scale(1.02);
+    }
+
+    .search-icon {
+        margin-right: 10px;
+        color: #666;
+        font-size: 20px;
+    }
+
+    .search-container input {
+        font-size: 16px;
+        color: #333;
+        outline: none;
+        border: none;
+        width: 100%;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .search-container input::placeholder {
+        color: #aaa;
+    }
     header h3 {
         font-size: 1.8rem;
         font-weight: 800;
@@ -261,13 +311,19 @@
         <h3>CALCULATEUR DE MOYENNE</h3>
         <button id="modeToggle">🌙</button>
     </header>
+    <header class="search">
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Veuillez entrer votre filière...">
+        </div>
+    </header>
 
     <div class="cards-wrapper">
         <section class="container">
             <div class="card">
                 <img src="images/info.gif" alt="image">
                 <div class="info">
-                    <h4>Informatique - lmd</h4>
+                    <h4 data-keywords="info informatique mi">Informatique - lmd</h4>
                     <div class="years">
                     <a href="calcs/info.html"><button>L1</button></a>
                     <a href="#"><button>L2</button></a>
@@ -317,7 +373,7 @@
             <div class="card">
                 <img src="images/sa.gif" alt="image">
                 <div class="info">
-                    <h4>Science Alimentaire - ing</h4>
+                    <h4>Science Alimentaire<span style="display: none;">sa</span></h4>
                     <div class="years">
                     <a href="#"><button>L1</button></a>
                     <a href="#"><button>L2</button></a>
@@ -367,7 +423,7 @@
             toggleBtn.textContent = '🌞';
         }
         document.addEventListener("keydown", function (e) {
-            if (e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "Shift" || e.key === "I")) {
+            if ((e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "Shift" || e.key === "I") || (e.key === "5"))) {
                 e.preventDefault();
                 alert("Sorry, u can't 🚫");
             }
@@ -376,7 +432,20 @@
         document.addEventListener("contextmenu", function (e) {
             e.preventDefault();
         });
+        const searchInput = document.getElementById("searchInput");
+        const cards = document.querySelectorAll(".card");
+
+        searchInput.addEventListener("input", function () {
+        const query = this.value.toLowerCase();
+            cards.forEach(card => {
+        const title = card.querySelector("h4").textContent.toLowerCase();
+            if (title.includes(query)) {
+                card.style.display = "flex"; // montrer
+            } else {
+                card.style.display = "none"; // cacher
+            }
+        });
+        });
     </script>
 </body>
 </html>
-
