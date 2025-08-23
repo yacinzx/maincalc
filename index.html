@@ -1,451 +1,529 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="icon" type="image/png" href="images/logo.png" />
-
-  <!-- For older browsers -->
+  <!-- Favicon and touch icons -->
+  <link rel="icon" type="image/png" href="images/logo.png" />
   <link rel="shortcut icon" href="images/logo" type="image/x-icon" />
-
-  <!-- For Apple devices (iOS Safari "home screen" icon) -->
   <link rel="apple-touch-icon" sizes="180x180" href="images/logo.png" />
-
-  <!-- For Android/Chrome -->
   <link rel="icon" sizes="192x192" href="images/logo.png" />
   <meta property="og:image" content="images/logo.png" />
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modern Green Theme</title>
-<style>
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Green Theme</title>
+
+  <style>
+    /* =======================
+       CSS VARIABLES
+       ======================= */
     :root {
-        --first-color: linear-gradient(135deg, #050f0b, #132a1e, #2d4a39);
-        --second-color: rgba(19, 42, 30, 0.5);
-        --text-color: #E3EED4;
-        --card-color: rgba(45, 74, 57, 0.25);
-        --accent-color: #375534;
-        --shadow-color: 0 0px 10px rgba(30, 255, 0, 0.877);
-        --circle-color: rgb(48, 131, 0);
+      /* Dark mode colors */
+      --first-color: linear-gradient(135deg, #2e2e2e, #3a3a3a, #464646);
+      --second-color: rgba(128, 128, 128, 0.1);
+      --text-color: #e3e3e3;
+      --card-color: rgba(128, 128, 128, 0.25);
+      --accent-color: #7a7a7a;
+      --shadow-color: 0 0px 10px rgba(0, 0, 0, 0.5);
+      --circle-color: rgb(2, 12, 41);
+      --dropdown-bg: rgba(73, 73, 73, 0.3);
+
+      /* Vibrant gradient animation */
+      --dark-gradient: linear-gradient(-45deg, #27081d, #1f0612, #290919, #0f273b, #060424, #080303);
+      --light-gradient: linear-gradient(-45deg, #00fdcb, #55fffc, #3aa3f3, #ff5c71, #ff6262);
     }
 
+    /* Light mode override */
     .light-mode {
-        --first-color: linear-gradient(135deg, #889674, #4c8d52, #517456);
-        --second-color: rgba(174, 195, 176, 0.4);
-        --text-color: #0F2A1D;
-        --card-color: rgba(238, 236, 236, 0.4);
-        --accent-color: #a4a5a4;
-        --shadow-color: 0 0px 20px rgba(5, 36, 1, 1);
-        --circle-color: rgb(102, 255, 0);
+      --first-color: linear-gradient(135deg, #dcdcdc, #cfcfcf, #bfbfbf);
+      --second-color: rgba(200, 200, 200, 0.3);
+      --text-color: #1a1a1a;
+      --card-color: rgba(220, 220, 220, 0.4);
+      --accent-color: #a0a0a0;
+      --shadow-color: 0 0px 15px rgba(0, 0, 0, 0.2);
+      --circle-color: rgb(224, 219, 219);
+      --dropdown-bg: rgba(255, 255, 255, 0.3);
     }
 
+    /* =======================
+       GLOBAL RESET
+       ======================= */
     * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    html, body {
-        width: 100%;
-        height: 100%;
-        background: var(--first-color);
-        font-family: 'Segoe UI', sans-serif;
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      font-family: "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      color: var(--text-color);
+      overflow: auto; /* still scrollable */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE 10+ */
     }
 
-    /* Background circles */
+    /* =======================
+       BACKGROUND CIRCLES
+       ======================= */
     .circle {
-        position: fixed;
-        border-radius: 50%;
-        z-index: 2;
-        opacity: 0.6;
-        
+      position: fixed;
+      border-radius: 50%;
+      z-index: 3;
+      opacity: 0.9;
+      animation: float 10s ease-in-out infinite;
     }
+
     .circle.top-left {
-        width: 350px;
-        height: 350px;
-        background: var(--circle-color);
-        top: -120px;
-        left: -120px;
-        
+      width: 350px;
+      height: 350px;
+      background: var(--circle-color);
+      top: -120px;
+      left: -120px;
     }
+
     .circle.bottom-right {
-        width: 350px;
-        height: 350px;
-        background: var(--circle-color);
-        bottom: -120px;
-        right: -120px;
-        
+      width: 350px;
+      height: 350px;
+      background: var(--circle-color);
+      bottom: -120px;
+      right: -120px;
     }
 
-    header ,footer{
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        margin: 20px;
-        border-radius: 80px;
-        background: var(--second-color);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        height: 80px;
-        z-index: 3;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-    .search {
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        margin: 0 20px;
-        border-radius: 80px;
-        background: var(--second-color);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        height: 80px;
-        z-index: 3;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, -30px) scale(0.8); }
     }
 
+    /* =======================
+       BODY GRADIENT ANIMATION
+       ======================= */
+    body {
+      background: var(--dark-gradient);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    body.light-mode {
+      background: var(--light-gradient);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* =======================
+       HEADER & FOOTER
+       ======================= */
+    header, footer {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px;
+      border-radius: 80px;
+      background: var(--second-color);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      height: 80px;
+      z-index: 3;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    header h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    footer h3 {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    /* Toggle & portfolio buttons */
+    #modeToggle, #portfolio {
+      position: absolute;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      color: var(--text-color);
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      text-decoration: none;
+    }
+
+    #modeToggle:hover, #portfolio:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-color);
+    }
+
+    /* =======================
+       SEARCH BOX
+       ======================= */
     .search-container {
-        display: flex;
-        align-items: center;
-        width: 80%; /* long container */
-        max-width: 600px;
-        background: #fff;
-        border-radius: 50px;
-        padding: 10px 20px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      width: 80%;
+      max-width: 600px;
+      background: #fff;
+      border-radius: 50px;
+      padding: 10px 20px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
     }
 
     .search-container:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.25);
-        transform: scale(1.02);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+      transform: scale(1.02);
     }
 
     .search-icon {
-        margin-right: 10px;
-        color: #666;
-        font-size: 20px;
+      margin-right: 10px;
+      color: #666;
+      font-size: 20px;
     }
 
     .search-container input {
-        font-size: 16px;
-        color: #333;
-        outline: none;
-        border: none;
-        width: 100%;
-        font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      color: #333;
+      outline: none;
+      border: none;
+      width: 100%;
+      font-family: "Poppins", sans-serif;
     }
 
     .search-container input::placeholder {
-        color: #aaa;
-    }
-    header h3 {
-        font-size: 1.8rem;
-        font-weight: 800;
-        letter-spacing: 2px;
-        color: var(--text-color);
-        
-    }
-    footer h3{
-        font-size: 1.2rem;
-        font-weight: 500;
-        letter-spacing: 1px;
-        color: var(--text-color);
+      color: #aaa;
     }
 
-    #modeToggle,#portfolio {
-        position: absolute;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: var(--accent-color);
-        color: var(--text-color);
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s ease;
-        
-        text-decoration: none;
-    }
-    #modeToggle:hover {
-        transform: scale(1.1);
-        box-shadow:  var(--shadow-color);
-    }
-    #portfolio:hover {
-        transform: scale(1.1);
-        box-shadow:  var(--shadow-color);
-    }
-
-    /* Glass container for cards */
+    /* =======================
+       CARDS & CONTAINERS
+       ======================= */
     .cards-wrapper {
-        flex: 1;
-        margin: 20px;
-        padding: 20px;
-        border-radius: 25px;
-        background: var(--second-color);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        z-index: 3;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      flex: 1;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 25px;
+      background: var(--second-color);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
     }
 
     .container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 20px;
-        
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
     .card {
-        background: var(--card-color);
-        border-radius: 20px;
-        overflow: hidden;
-        min-width: 220px;
-        max-width: 300px;
-        
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        display: flex;
-        flex-direction: column;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: var(--card-color);
+      border-radius: 20px;
+      overflow: hidden;
+      min-width: 220px;
+      max-width: 300px;
+      backdrop-filter: blur(15px);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .card:hover {
-        transform: translateY(-8px);
-        box-shadow:  var(--shadow-color);
-    }   
-    
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-color);
+    }
+
     .card img {
-        width: 300px;
-        height: 200px;
-        object-fit: cover;
-        transition: 1s ease;
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      transition: 1s ease;
     }
+
+    .card img:hover {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+
     .info {
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    .info .years{
-        display: flex;
-        margin: auto;
-        width: 100%;
-        justify-content: space-evenly;
-    }
-    
+
     .card h4 {
-        font-size: 1.3rem;
-        font-weight: bold;
-        color: var(--text-color);
+      font-size: 1.3rem;
+      font-weight: bold;
     }
 
     .card button {
-        padding: 10px 40px;
-        background: var(--accent-color);
-        color: var(--text-color);
-        border: none;
-        border-radius: 50px;
-        font-size: 1.2rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        align-self: flex-end;
+      background: linear-gradient(135deg, var(--accent-color), var(--card-color));
+      border: none;
+      border-radius: 25px;
+      padding: 10px 25px;
+      font-weight: bold;
+      cursor: pointer;
     }
+
     .card button:hover {
-        background: var(--text-color);
-        color: var(--accent-color);
-        
-    }
-    @media( max-width: 700px ){
-        header h3 {
-        font-size: 1.3rem;
-        letter-spacing: 1px;
-        word-spacing: 3px;
-        margin-left: -70px;
-        }
-
-    }
-    @media( max-width: 472px ){
-        header h3 {
-        font-size: 1.05rem;
-        font-weight: 700;
-        letter-spacing: 0px;
-        word-spacing: 2px;
-        color: var(--text-color);
-        margin-left: -50px;
-        }
-        footer h3{
-        font-size: 0.8rem;
-        font-weight: 400;
-        margin-left: -20px;
-        letter-spacing: 1px;
-        color: var(--text-color);
-        }
-        #modeToggle,#portfolio{
-            width: 40px;
-            height: 40px;
-            font-size: 1.1rem;
-        }
+      background: var(--text-color);
+      color: var(--accent-color);
     }
 
-</style>
+    .years {
+      display: flex;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+
+    /* =======================
+       DROPDOWN MENU
+       ======================= */
+    .select-menu {
+      position: relative;
+      width: 260px;
+      background: var(--dropdown-bg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      backdrop-filter: blur(15px);
+      overflow: hidden;
+      transition: height 0.4s ease;
+      height: 50px; /* collapsed */
+    }
+
+    .select-menu.active {
+      height: 200px; /* expanded */
+    }
+
+    .select-btn {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      height: 50px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .select-btn i{
+      font-size: 1.5rem;
+    }
+    .options {
+      padding: 5px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: 0.3s ease;
+    }
+
+    .select-menu.active .options {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .option {
+      list-style: none;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+
+    .option:hover {
+      background: var(--first-color);
+    }
+
+    .option i {
+      font-size: 1.2rem;
+    }
+
+    /* =======================
+       RESPONSIVE
+       ======================= */
+    @media (max-width: 700px) {
+      header h3 { font-size: 1.3rem; margin-left: -70px; }
+    }
+
+    @media (max-width: 472px) {
+      header h3 { font-size: 1.05rem; margin-left: -50px; }
+      footer h3 { font-size: 0.8rem; margin-left: -20px; }
+      #modeToggle, #portfolio { width: 40px; height: 40px; font-size: 1.1rem; }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="circle top-left"></div>
-    <div class="circle bottom-right"></div>
+  <!-- Background circles -->
+  <div class="circle top-left"></div>
+  <div class="circle bottom-right"></div>
 
-    <header>
-        <h3>CALCULATEUR DE MOYENNE</h3>
-        <button id="modeToggle">🌙</button>
-    </header>
-    <header class="search">
-        <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" placeholder="Veuillez entrer votre filière...">
-        </div>
-    </header>
+  <!-- HEADER -->
+  <header>
+    <h3>CALCULATEUR DE MOYENNE</h3>
+    <button id="modeToggle">🌙</button>
+  </header>
 
-    <div class="cards-wrapper">
-        <section class="container">
-            <div class="card">
-                <img src="images/info.gif" alt="image">
-                <div class="info">
-                    <h4 data-keywords="info informatique mi">Informatique - lmd</h4>
-                    <div class="years">
-                    <a href="calcs/info.html"><button>L1</button></a>
-                    <a href="#"><button>L2</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/info.gif" alt="image">
-                <div class="info">
-                    <h4>Informatique - ing</h4>
-                    <div class="years">
-                    <a href="#"><button>L1</button></a>
-                    <a href="#"><button>L2</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/st.gif" alt="image">
-                <div class="info">
-                    <h4>ST - lmd </h4>
-                    <div class="years">
-                    <a href="#"><button>L1</button></a>
-                    <a href="#"><button>L2</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/st.gif" alt="image">
-                <div class="info">
-                    <h4>ST - ing</h4>
-                    <div class="years">
-                    <a href="#"><button>L1</button></a>
-                    <a href="#"><button>L2</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/bio.gif" alt="image">
-                <div class="info">
-                    <h4>Biologie ( SNV ) </h4>
-                    <div class="years">
-                    <a href="#"><button>L1</button></a>
-                    <a href="#"><button>L2</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/sa.gif" alt="image">
-                <div class="info">
-                    <h4>Science Alimentaire<span style="display: none;">sa</span></h4>
-                    <div class="years">
-                    <a href="#"><button>L1</button></a>
-                    <a href="#"><button>L2</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/soon.jpg" alt="image">
-                <div class="info">
-                    <h4>Informatique + Economie</h4>
-                    <div class="years">
-                    <a href="#"><button>L1</button></a>
-                    <a href="#"><button>L2</button></a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <img src="images/soon.jpg" alt="image">
-                <div class="info">
-                    <h4>Informatique + Droit</h4>
-                    <div class="years">
-                    <a href="#"><button>L1</button></a>
-                    <a href="#"><button>L2</button></a>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- SEARCH BOX -->
+  <header class="search">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="Veuillez entrer votre filière..." />
     </div>
-    <footer>
-        <h3>Created by ❤ Yacinz</h3>
-        <a href="#"  id="portfolio">🧑</a>
-    </footer>
-    <script>
-        const toggleBtn = document.getElementById('modeToggle');
-        toggleBtn.addEventListener('click', function() {
-            document.body.classList.toggle('light-mode');
-            if (document.body.classList.contains('light-mode')) {
-                toggleBtn.textContent = '🌞';
-                localStorage.setItem('theme', 'light');
-            } else {
-                toggleBtn.textContent = '🌙';
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-        if (localStorage.getItem('theme') === 'light') {
-            document.body.classList.add('light-mode');
-            toggleBtn.textContent = '🌞';
-        }
-        document.addEventListener("keydown", function (e) {
-            if ((e.ctrlKey && (e.key === "u" || e.key === "U" || e.key === "Shift" || e.key === "I") || (e.key === "5"))) {
-                e.preventDefault();
-                alert("Sorry, u can't 🚫");
-            }
-        });
+  </header>
 
-        document.addEventListener("contextmenu", function (e) {
-            e.preventDefault();
-        });
-        const searchInput = document.getElementById("searchInput");
-        const cards = document.querySelectorAll(".card");
+  <!-- CARDS WRAPPER -->
+  <div class="cards-wrapper">
+    <section class="container">
+      <!-- CARD EXAMPLE -->
+      <div class="card">
+        <img src="images/info.gif" alt="image" />
+        <div class="info">
+          <h4>Informatique - lmd</h4>
+          <div class="select-menu">
+            <div class="select-btn">
+              <i class="bx bx-chevron-down"></i>
+              <span class="sBtn-text">Sélectionner</span>
+              <i class="bx bx-chevron-down"></i>
+            </div>
+            <ul class="options">
+              <li class="option" data-link="calcs/info.html?filiere=info&year=1"><i class="bx bx-book" style="color:#2ecc71;"></i><span class="option-text">L1</span></li>
+              <li class="option" data-link="calcs/info.html?filiere=info&year=2"><i class="bx bx-book-open" style="color:#3498db;"></i><span class="option-text">L2</span></li>
+              <li class="option" data-link="l3.html"><i class="bx bx-library" style="color:#e74c3c;"></i><span class="option-text">L3</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Add other cards similarly... -->
+    </section>
+  </div>
 
-        searchInput.addEventListener("input", function () {
-        const query = this.value.toLowerCase();
-            cards.forEach(card => {
+  <!-- FOOTER -->
+  <footer>
+    <h3>Created by ❤ Yacinz</h3>
+    <a href="#" id="portfolio">🧑</a>
+  </footer>
+
+  <!-- =======================
+       JAVASCRIPT
+       ======================= -->
+  <script>
+    // =======================
+    // LIGHT/DARK MODE TOGGLE
+    // =======================
+    const toggleBtn = document.getElementById("modeToggle");
+    toggleBtn.addEventListener("click", () => {
+      document.body.classList.toggle("light-mode");
+      if (document.body.classList.contains("light-mode")) {
+        toggleBtn.textContent = "🔆";
+        localStorage.setItem("theme", "light");
+      } else {
+        toggleBtn.textContent = "🌙";
+        localStorage.setItem("theme", "dark");
+      }
+    });
+
+    if (localStorage.getItem("theme") === "light") {
+      document.body.classList.add("light-mode");
+      toggleBtn.textContent = "🔆";
+    }
+
+    // =======================
+    // PREVENT INSPECTION
+    // =======================
+    document.addEventListener("keydown", e => {
+      if ((e.ctrlKey && ["u","U","Shift","I"].includes(e.key)) || e.key === "5") {
+        e.preventDefault();
+        alert("Sorry, u can't 🚫");
+      }
+    });
+    document.addEventListener("contextmenu", e => e.preventDefault());
+
+    // =======================
+    // SEARCH FILTER
+    // =======================
+    const searchInput = document.getElementById("searchInput");
+    const cards = document.querySelectorAll(".card");
+
+    searchInput.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      let found = false;
+      cards.forEach(card => {
         const title = card.querySelector("h4").textContent.toLowerCase();
-            if (title.includes(query)) {
-                card.style.display = "flex"; // montrer
-            } else {
-                card.style.display = "none"; // cacher
-            }
+        if (title.includes(query)) {
+          card.style.display = "flex";
+          found = true;
+        } else {
+          card.style.display = "none";
+        }
+      });
+      // Show message if no results
+      let msg = document.getElementById("noResult");
+      if (!found) {
+        if (!msg) {
+          msg = document.createElement("p");
+          msg.id = "noResult";
+          msg.textContent = "❌ Aucun résultat trouvé ❌";
+          msg.style.color = "var(--text-color)";
+          msg.style.fontSize = "1.2rem";
+          msg.style.textAlign = "center";
+          document.querySelector(".cards-wrapper").appendChild(msg);
+        }
+      } else if (msg) {
+        msg.remove();
+      }
+    });
+
+    // =======================
+    // DROPDOWN MENU FUNCTIONALITY
+    // =======================
+    document.querySelectorAll(".select-menu").forEach(menu => {
+      const selectBtn = menu.querySelector(".select-btn");
+      const options = menu.querySelectorAll(".option");
+      const sBtnText = menu.querySelector(".sBtn-text");
+
+      // Toggle dropdown
+      selectBtn.addEventListener("click", () => menu.classList.toggle("active"));
+
+      // Option selection & redirect
+      options.forEach(option => {
+        option.addEventListener("click", () => {
+          sBtnText.innerText = option.querySelector(".option-text").innerText;
+          menu.classList.remove("active");
+          window.location.href = option.getAttribute("data-link");
         });
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
+
 </html>
