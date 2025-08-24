@@ -308,7 +308,13 @@
   </footer>
 
   <script>
-  
+  function hideTable(containerId) {
+  const table = document.getElementById(containerId).closest("table");
+  if (table) {
+    table.style.display = "none";
+  }
+}
+
 // ===========================
 // MESSAGE WHEN NO MODULES
 // ===========================
