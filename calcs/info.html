@@ -309,6 +309,9 @@
 
   <script>
   
+// ===========================
+// MESSAGE WHEN NO MODULES
+// ===========================
 function showNoModules(containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = `
@@ -319,121 +322,117 @@ function showNoModules(containerId) {
     </tr>
   `;
 }
-  
-  // ===========================
-  // DATA STRUCTURE FOR FILIERES
-  // ===========================
-  // All modules are stored in "filieres", organized by:
-  // filiere → year → semester (semestre1 / semestre2)
 
-  const filieres = {
-    info: {
-      1: {
-        semestre1: [
-          { nom: "Analyse 1", coef: 6, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
-          { nom: "Algèbre 1", coef: 5, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
-          { nom: "Algo 1", coef: 6, hasTP: true, hasTD: true, weights: { tp: 0.2, td: 0.2, exam: 0.6 } },
-          { nom: "Structure Machine 1", coef: 5, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } },
-          { nom: "Physique 1", coef: 4, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
-          { nom: "Langue Étrangère 1", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } },
-          { nom: "TSEE", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } }
-        ],
-        semestre2: [
-          { nom: "Analyse 2", coef: 6, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
-          { nom: "Algèbre 2", coef: 4, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
-          { nom: "Algo 2", coef: 6, hasTP: true, hasTD: true, weights: { tp: 0.2, td: 0.2, exam: 0.6 } },
-          { nom: "Structure Machine 2", coef: 4, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } },
-          { nom: "Physique 2", coef: 3, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
-          { nom: "Langue Étrangère 2", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } },
-          { nom: "Proba et Stat", coef: 3, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
-          { nom: "TIC", coef: 2, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } }
-        ]
-      }
-      2: {
-    semestre1 : null ,
-    semestre2 : []
-    }
-      // You can add year 2, year 3... here
+// ===========================
+// DATA STRUCTURE FOR FILIERES
+// ===========================
+// filiere → year → semestre1 / semestre2
+const filieres = {
+  info: {
+    1: {
+      semestre1: [
+        { nom: "Analyse 1", coef: 6, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+        { nom: "Algèbre 1", coef: 5, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+        { nom: "Algo 1", coef: 6, hasTP: true, hasTD: true, weights: { tp: 0.2, td: 0.2, exam: 0.6 } },
+        { nom: "Structure Machine 1", coef: 5, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } },
+        { nom: "Physique 1", coef: 4, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+        { nom: "Langue Étrangère 1", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } },
+        { nom: "TSEE", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } }
+      ],
+      semestre2: [
+        { nom: "Analyse 2", coef: 6, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+        { nom: "Algèbre 2", coef: 4, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+        { nom: "Algo 2", coef: 6, hasTP: true, hasTD: true, weights: { tp: 0.2, td: 0.2, exam: 0.6 } },
+        { nom: "Structure Machine 2", coef: 4, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } },
+        { nom: "Physique 2", coef: 3, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+        { nom: "Langue Étrangère 2", coef: 2, hasTP: false, hasTD: false, weights: { exam: 1 } },
+        { nom: "Proba et Stat", coef: 3, hasTP: false, hasTD: true, weights: { td: 0.4, exam: 0.6 } },
+        { nom: "TIC", coef: 2, hasTP: true, hasTD: false, weights: { tp: 0.4, exam: 0.6 } }
+      ]
     },
-    economie: {
-      1: {
-        semestre1: [ /* Fill modules for Economie L1 S1 */ ],
-        semestre2: [ /* Fill modules for Economie L1 S2 */ ]
-      }
+    2: {
+      semestre1: null,   // nothing defined yet
+      semestre2: []      // nothing defined yet
     }
+  },
+  economie: {
+    1: {
+      semestre1: [], // to be filled later
+      semestre2: []  // to be filled later
+    }
+  }
+};
+
+// ===========================
+// URL PARAMETERS (filiere, year)
+// ===========================
+function getParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    filiere: params.get('filiere') || 'info',
+    year: params.get('year') || '1'
   };
+}
 
-  // ==========================
-  // URL PARAMETERS (filiere, year)
-  // ==========================
-  // Example: ?filiere=info&year=1
-  function getParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      filiere: params.get('filiere') || 'info',
-      year: params.get('year') || '1'
-    };
-  }
+const { filiere, year } = getParams();
 
-  const { filiere, year } = getParams();
-  const semestre1 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre1 : [];
-  const semestre2 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre2 : [];
+// Safely extract semestre data
+const semestre1 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre1 : [];
+const semestre2 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre2 : [];
 
-  // ==========================
-  // CREATE TABLES
-  // ==========================
-  // Generate input rows dynamically for each module
-  function createTable(modules, tbodyId) {
-    document.getElementById(tbodyId).innerHTML = modules.map((mod, i) => `
-      <tr>
-        <td>${mod.nom}</td>
-        <td>${mod.hasTP ? `<input type="number" min="0" max="20" id="tp${tbodyId}${i}" oninput="calculer('${tbodyId}')">` : '-'}</td>
-        <td>${mod.hasTD ? `<input type="number" min="0" max="20" id="td${tbodyId}${i}" oninput="calculer('${tbodyId}')">` : '-'}</td>
-        <td><input type="number" min="0" max="20" id="exam${tbodyId}${i}" oninput="calculer('${tbodyId}')"></td>
-        <td id="avg${tbodyId}${i}">-</td>
-      </tr>`).join('');
-  }
+// ===========================
+// CREATE TABLES
+// ===========================
+function createTable(modules, tbodyId) {
+  document.getElementById(tbodyId).innerHTML = modules.map((mod, i) => `
+    <tr>
+      <td>${mod.nom}</td>
+      <td>${mod.hasTP ? `<input type="number" min="0" max="20" id="tp${tbodyId}${i}" oninput="calculer('${tbodyId}')">` : '-'}</td>
+      <td>${mod.hasTD ? `<input type="number" min="0" max="20" id="td${tbodyId}${i}" oninput="calculer('${tbodyId}')">` : '-'}</td>
+      <td><input type="number" min="0" max="20" id="exam${tbodyId}${i}" oninput="calculer('${tbodyId}')"></td>
+      <td id="avg${tbodyId}${i}">-</td>
+    </tr>`).join('');
+}
 
-  // ==========================
-  // CALCULATE AVERAGES
-  // ==========================
-  // This uses "semestre1" / "semestre2" (from filieres)
-  function calculer(tbodyId) {
-    const mods = tbodyId === 'table-body1' ? semestre1 : semestre2;
-    let total = 0, coefSum = 0;
+// ===========================
+// CALCULATE AVERAGES
+// ===========================
+function calculer(tbodyId) {
+  const mods = tbodyId === 'table-body1' ? semestre1 : semestre2;
+  let total = 0, coefSum = 0;
 
-    mods.forEach((mod, i) => {
-      let tp = mod.hasTP ? parseFloat(document.getElementById(`tp${tbodyId}${i}`).value) || 0 : 0;
-      let td = mod.hasTD ? parseFloat(document.getElementById(`td${tbodyId}${i}`).value) || 0 : 0;
-      let exam = parseFloat(document.getElementById(`exam${tbodyId}${i}`).value) || 0;
+  mods.forEach((mod, i) => {
+    let tp = mod.hasTP ? parseFloat(document.getElementById(`tp${tbodyId}${i}`).value) || 0 : 0;
+    let td = mod.hasTD ? parseFloat(document.getElementById(`td${tbodyId}${i}`).value) || 0 : 0;
+    let exam = parseFloat(document.getElementById(`exam${tbodyId}${i}`).value) || 0;
 
-      // Weighted average for each module
-      let moyenne = 0;
-      if (mod.hasTP) moyenne += mod.weights.tp * tp;
-      if (mod.hasTD) moyenne += mod.weights.td * td;
-      moyenne += mod.weights.exam * exam;
+    // Weighted average for each module
+    let moyenne = 0;
+    if (mod.hasTP) moyenne += mod.weights.tp * tp;
+    if (mod.hasTD) moyenne += mod.weights.td * td;
+    moyenne += mod.weights.exam * exam;
 
-      total += moyenne * mod.coef;
-      coefSum += mod.coef;
+    total += moyenne * mod.coef;
+    coefSum += mod.coef;
 
-      // Update cell
-      const avgCell = document.getElementById(`avg${tbodyId}${i}`);
-      avgCell.textContent = moyenne.toFixed(2);
-      avgCell.className = moyenne >= 10 ? 'avg-green' : 'avg-red';
-    });
+    // Update cell
+    const avgCell = document.getElementById(`avg${tbodyId}${i}`);
+    avgCell.textContent = moyenne.toFixed(2);
+    avgCell.className = moyenne >= 10 ? 'avg-green' : 'avg-red';
+  });
 
-    // Final average for the semester
-    const finalAvg = total / coefSum;
-    const finalAvgEl = document.getElementById(
-      tbodyId === 'table-body1' ? 'final-average1' : 'final-average2'
-    );
-    finalAvgEl.textContent = finalAvg.toFixed(2);
-    finalAvgEl.className = finalAvg >= 10 ? 'avg-green' : 'avg-red';
-  }
+  // Final average
+  const finalAvg = total / coefSum;
+  const finalAvgEl = document.getElementById(
+    tbodyId === 'table-body1' ? 'final-average1' : 'final-average2'
+  );
+  finalAvgEl.textContent = isNaN(finalAvg) ? "-" : finalAvg.toFixed(2);
+  finalAvgEl.className = finalAvg >= 10 ? 'avg-green' : 'avg-red';
+}
 
-  // ==========================
+// ===========================
 // INITIALIZE TABLES
-// ==========================
+// ===========================
 if (semestre1 && semestre1.length > 0) {
   createTable(semestre1, 'table-body1');
 } else {
