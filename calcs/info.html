@@ -353,21 +353,21 @@
   // ==========================
   // Example: ?filiere=info&year=1
   function getParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      filiere: params.get('filiere') || 'info',
-      year: params.get('year') || '1'
-    };
-  }
+  const params = new URLSearchParams(window.location.search);
+  return {
+    filiere: params.get('filiere') || 'info',
+    year: params.get('year') || '1'  // make sure it's string
+  };
+}
 
   const { filiere, year } = getParams();
-  const semestre1 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre1 : [];
-  const semestre2 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre2 : [];
+const data = filieres[filiere]?.[year];  // "1" will match the key 1
 
   // ==========================
   // CREATE TABLES
   // ==========================
   // Generate input rows dynamically for each module
+  console.log("Filiere:", filiere, "Year:", year, "Data:", data);
   function createTable(modules, tbodyId) {
     document.getElementById(tbodyId).innerHTML = modules.map((mod, i) => `
       <tr>
