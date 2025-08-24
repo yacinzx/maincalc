@@ -308,10 +308,7 @@
   </footer>
 
   <script>
-  // ===========================
-// HIDE TABLE IF NO MODULES
-// ===========================
-function hideTable(containerId) {
+  function hideTable(containerId) {
   const table = document.getElementById(containerId).closest("table");
   if (table) {
     table.style.display = "none";
@@ -319,8 +316,23 @@ function hideTable(containerId) {
 }
 
 // ===========================
+// MESSAGE WHEN NO MODULES
+// ===========================
+function showNoModules(containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = `
+    <tr>
+      <td colspan="6" style="text-align:center; font-style:italic; color:gray;">
+        Les modules de ce semestre seront ajoutés bientôt.
+      </td>
+    </tr>
+  `;
+}
+
+// ===========================
 // DATA STRUCTURE FOR FILIERES
 // ===========================
+// filiere → year → semestre1 / semestre2
 const filieres = {
   info: {
     1: {
@@ -345,20 +357,20 @@ const filieres = {
       ]
     },
     2: {
-      semestre1: null,   // will hide
-      semestre2: []      // will hide
+      semestre1: null,   // nothing defined yet
+      semestre2: []      // nothing defined yet
     }
   },
   economie: {
     1: {
-      semestre1: [], // will hide
-      semestre2: []  // will hide
+      semestre1: [], // to be filled later
+      semestre2: []  // to be filled later
     }
   }
 };
 
 // ===========================
-// URL PARAMETERS
+// URL PARAMETERS (filiere, year)
 // ===========================
 function getParams() {
   const params = new URLSearchParams(window.location.search);
@@ -375,7 +387,7 @@ const semestre1 = filieres[filiere] && filieres[filiere][year] ? filieres[filier
 const semestre2 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre2 : [];
 
 // ===========================
-// CREATE TABLE
+// CREATE TABLES
 // ===========================
 function createTable(modules, tbodyId) {
   document.getElementById(tbodyId).innerHTML = modules.map((mod, i) => `
@@ -400,6 +412,7 @@ function calculer(tbodyId) {
     let td = mod.hasTD ? parseFloat(document.getElementById(`td${tbodyId}${i}`).value) || 0 : 0;
     let exam = parseFloat(document.getElementById(`exam${tbodyId}${i}`).value) || 0;
 
+    // Weighted average for each module
     let moyenne = 0;
     if (mod.hasTP) moyenne += mod.weights.tp * tp;
     if (mod.hasTD) moyenne += mod.weights.td * td;
@@ -408,11 +421,13 @@ function calculer(tbodyId) {
     total += moyenne * mod.coef;
     coefSum += mod.coef;
 
+    // Update cell
     const avgCell = document.getElementById(`avg${tbodyId}${i}`);
     avgCell.textContent = moyenne.toFixed(2);
     avgCell.className = moyenne >= 10 ? 'avg-green' : 'avg-red';
   });
 
+  // Final average
   const finalAvg = total / coefSum;
   const finalAvgEl = document.getElementById(
     tbodyId === 'table-body1' ? 'final-average1' : 'final-average2'
@@ -427,13 +442,13 @@ function calculer(tbodyId) {
 if (semestre1 && semestre1.length > 0) {
   createTable(semestre1, 'table-body1');
 } else {
-  hideTable('table-body1');
+  showNoModules('table-body1');
 }
 
 if (semestre2 && semestre2.length > 0) {
   createTable(semestre2, 'table-body2');
 } else {
-  hideTable('table-body2');
+  showNoModules('table-body2');
 }
   // ==========================
   // LIGHT/DARK MODE TOGGLE
