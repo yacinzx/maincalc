@@ -276,31 +276,49 @@
     
   </header>
 
-  <div class="container">
-    <h2>SEMESTRE 1</h2>
-    <table>
-      <thead>
-        <tr><th>Module</th><th>TP</th><th>TD</th><th>Examen</th><th>Moyenne</th></tr>
-      </thead>
-      <tbody id="table-body1"></tbody>
-      <tfoot>
-        <tr><th colspan="4">Moyenne Générale</th><th id="final-average1">-</th></tr>
-      </tfoot>
-    </table>
-  </div>
+<div class="container" id="semestre1-container">
+  <h2>SEMESTRE 1</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>TP</th>
+        <th>TD</th>
+        <th>Examen</th>
+        <th>Moyenne</th>
+      </tr>
+    </thead>
+    <tbody id="table-body1"></tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4">Moyenne Générale</th>
+        <th id="final-average1">-</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 
-  <div class="container">
-    <h2>SEMESTRE 2</h2>
-    <table>
-      <thead>
-        <tr><th>Module</th><th>TP</th><th>TD</th><th>Examen</th><th>Moyenne</th></tr>
-      </thead>
-      <tbody id="table-body2"></tbody>
-      <tfoot>
-        <tr><th colspan="4">Moyenne Générale</th><th id="final-average2">-</th></tr>
-      </tfoot>
-    </table>
-  </div>
+<div class="container" id="semestre2-container">
+  <h2>SEMESTRE 2</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Module</th>
+        <th>TP</th>
+        <th>TD</th>
+        <th>Examen</th>
+        <th>Moyenne</th>
+      </tr>
+    </thead>
+    <tbody id="table-body2"></tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4">Moyenne Générale</th>
+        <th id="final-average2">-</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
 
   <footer>
     <h3>Créé par ❤ Yacinz</h3>
@@ -424,17 +442,8 @@ function calculer(tbodyId) {
 // ===========================
 // INITIALIZE TABLES
 // ===========================
-if (semestre1 && semestre1.length > 0) {
-  createTable(semestre1, 'table-body1');
-} else {
-  hideTable('table-body1');
-}
-
-if (semestre2 && semestre2.length > 0) {
-  createTable(semestre2, 'table-body2');
-} else {
-  hideTable('table-body2');
-}
+renderTable(data.semestre1, "semestre1");
+renderTable(data.semestre2, "semestre2");
   // ==========================
   // LIGHT/DARK MODE TOGGLE
   // ==========================
@@ -468,7 +477,39 @@ if (semestre2 && semestre2.length > 0) {
   document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
   });
+function renderTable(modules, semestreId) {
+  const container = document.getElementById(`${semestreId}-container`);
+  const tbody = document.getElementById(`table-body${semestreId === "semestre1" ? "1" : "2"}`);
+  const finalAverage = document.getElementById(`final-average${semestreId === "semestre1" ? "1" : "2"}`);
 
+  // If no modules → hide the whole container
+  if (!modules || modules.length === 0) {
+    container.style.display = "none";
+    return;
+  }
+
+  // Otherwise show it
+  container.style.display = "block";
+
+  // Reset previous rows
+  tbody.innerHTML = "";
+
+  // Add rows for each module
+  modules.forEach(mod => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${mod.nom}</td>
+      <td>${mod.hasTP ? `<input type="number" class="note tp">` : "-"}</td>
+      <td>${mod.hasTD ? `<input type="number" class="note td">` : "-"}</td>
+      <td><input type="number" class="note exam"></td>
+      <td class="moyenne">-</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  // Reset moyenne générale
+  finalAverage.textContent = "-";
+}
   </script>
 </body>
 </html>
