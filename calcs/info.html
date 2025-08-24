@@ -309,7 +309,16 @@
 
   <script>
   
-
+function showNoModules(containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = `
+    <tr>
+      <td colspan="6" style="text-align:center; font-style:italic; color:gray;">
+        Les modules de ce semestre seront ajoutés bientôt.
+      </td>
+    </tr>
+  `;
+}
   
   // ===========================
   // DATA STRUCTURE FOR FILIERES
@@ -421,8 +430,17 @@
   // ==========================
   // INITIALIZE TABLES
   // ==========================
-  createTable(semestre1, 'table-body1');
-  createTable(semestre2, 'table-body2');
+  if (data?.semestre1) {
+  createTable(data.semestre1, 'table-body1');
+} else {
+  showNoModules('table-body1');
+}
+
+if (data?.semestre2) {
+  createTable(data.semestre2, 'table-body2');
+} else {
+  showNoModules('table-body2');
+}
 
   // ==========================
   // LIGHT/DARK MODE TOGGLE
