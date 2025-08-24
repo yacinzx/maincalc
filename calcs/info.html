@@ -432,20 +432,19 @@ function showNoModules(containerId) {
   }
 
   // ==========================
-  // INITIALIZE TABLES
-  // ==========================
-  if (data?.semestre1) {
-  createTable(data.semestre1, 'table-body1');
+// INITIALIZE TABLES
+// ==========================
+if (semestre1 && semestre1.length > 0) {
+  createTable(semestre1, 'table-body1');
 } else {
   showNoModules('table-body1');
 }
 
-if (data?.semestre2) {
-  createTable(data.semestre2, 'table-body2');
+if (semestre2 && semestre2.length > 0) {
+  createTable(semestre2, 'table-body2');
 } else {
   showNoModules('table-body2');
 }
-
   // ==========================
   // LIGHT/DARK MODE TOGGLE
   // ==========================
