@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Informatique + Économie</title>
+  <title>ST - LMD</title>
   <link rel="icon" type="image/png" href="images/logo.png" />
   <style>
     :root {
@@ -315,19 +315,6 @@
   }
 }
 
-// ===========================
-// MESSAGE WHEN NO MODULES
-// ===========================
-function showNoModules(containerId) {
-  const container = document.getElementById(containerId);
-  container.innerHTML = `
-    <tr>
-      <td colspan="6" style="text-align:center; font-style:italic; color:gray;">
-        Les modules de ce semestre seront ajoutés bientôt.
-      </td>
-    </tr>
-  `;
-}
 
 // ===========================
 // DATA STRUCTURE FOR FILIERES
@@ -383,6 +370,19 @@ const { filiere, year } = getParams();
 // Safely extract semestre data
 const semestre1 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre1 : [];
 const semestre2 = filieres[filiere] && filieres[filiere][year] ? filieres[filiere][year].semestre2 : [];
+// ===========================
+// MESSAGE WHEN NO MODULES
+// ===========================
+function showNoModules(containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = `
+    <tr>
+      <td colspan="6" style="text-align:center; font-style:italic; color:gray;">
+        Les modules de ce semestre seront ajoutés bientôt.
+      </td>
+    </tr>
+  `;
+}
 
 // ===========================
 // CREATE TABLES
